@@ -1,1 +1,60 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #404c51 ;
+
+}
+
+label {
+  font-weight: bold;
+}
+
+/* Desiner responsivo evitando barra de rolagem. */
+@media (min-width: 1200px) {
+.container {
+
+  width: 1170px;
+  /* Margem em cima e embaixo e o auto é pra centralizar distribuindo espaço automaticamente. */
+  margin: 0 auto;
+
+}
+}
+
+.p-button {
+  margin-right: 0.25em !important;
+}
+
+
+.col-valor-header {
+  width: 120px;
+}
+
+.col-valor-content {
+  text-align: right;
+}
+
+.col-data-header {
+  width: 120px;
+}
+
+.col-data-content {
+  text-align: center;
+}
+
+.col-acoes-header {
+  width: 115px;
+}
+
+.col-acoes {
+  width: 120 px
+  text-align center;
+}
+
+.col-acoes > a {
+  margin-right: 5px;
+}
+
+
+

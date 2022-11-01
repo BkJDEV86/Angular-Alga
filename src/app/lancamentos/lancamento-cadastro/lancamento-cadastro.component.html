@@ -1,0 +1,123 @@
+<div class="container">
+  <form #usuarioForm="ngForm" (ngSubmit)="salvar(usuarioForm)" >
+
+    <div class="row">
+
+      <div class="col">
+        <h1>Novo Lançamento</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p-selectButton [options]="tipos" #tipo></p-selectButton>
+      </div>
+    </div>
+      <!--o p-fluid faz com que ocupe todo o espaço-->
+      <!--O md:col-3 faz com que a partir de 641 px ele ocupe só a metade.-->
+      <div class="row">
+       <div class="col-3 p-fluid">
+        <label>Vencimento</label>
+        <!--o inline falso é para o calendário não aparecer direto-->
+        <!--o readonlyinput falso é para o usuário poder digitar o dia no calendário -->
+        <!--o showicon falso é para  não ter um botão que apareça um calendário ao clicar o botão-->
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="false"
+        name="vencimento" ngModel #vencimento="ngModel" [required]="true">
+        </p-calendar>
+
+
+          <app-message [control]="vencimento.control" error="required"
+        text="Informe uma data de vencimento"></app-message>
+
+
+       </div>
+       <div class="col-3 p-fluid">
+           <!--Após ter criado uma variável #tipo , nós fizemos uma interpolação. Caso o valor
+        seja RECEITA aparecerá recebimento do contrário Pagamento-->
+        <label>{{tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
+        <p-calendar dateFormat="dd/mm/yy>"></p-calendar>
+
+      </div>
+      </div>
+
+     <div class="row">
+      <div class="col-9 p-fluid">
+        <label>Descrição</label>
+        <!--O name é importante porque dá o nome para o controle do ngModel no formulário-->
+        <!--A função do ng model é registrar o controle dentro do formulário-->
+        <!--A variável descrição exporta a variável tendo acesso a instância de diretiva ngModel-->
+        <input pInputText type="text" name="descricao" ngModel #descricao="ngModel" [required]="true" minlength="5">
+
+         <!--O control está fazendo referência a variável acima que faz referência
+        à instância de Ngmodel-->
+
+          <app-message [control]="descricao.control" error="required"
+         text="Informe uma descricão"></app-message>
+
+        <!--Como esta propriedade errors pode ser nula, o Typescript reporta um problema na
+           compilação do código. É necessário realizar a seguinte alteração nos pontos em que
+            aparece a propriedade errors.-->
+            <!--O colchetes no ['minlength'] é para corrigir o erro Property 'minlength' comes
+              from an index signature, so it must be accessed with ['minlength'] porque
+               noPropertyAccessFromIndexSignature estar ligada.  Segundo a
+               própria documentação, o objetivo dessa configuração é garantir o uso correto de
+                propriedades dentro de objetos, sinalizando explicitamente que você conhece a
+                 propriedade dentro dele.-->
+                 <!--
+ <app-message [control]="descricao" error="minlength"
+          text="Mínimo de {{ descricao.errors?.['minlength'].requiredLength }} caracteres. Você digitou apenas {{ descricao.errors?.['minlength'].actualLength }}">
+        </app-message>
+
+          Mínimo de {{ descricao.errors?.['minlength'].requiredLength }} caracteres. Você digitou apenas {{
+          descricao.errors?.['minlength'].actualLength }}
+        -->
+
+<div *ngIf="descricao.hasError('minlength') && descricao.dirty" class="p-message p-message-error">
+  <app-message [control]="descricao.control" error="minlength"
+         text="Mínimo de {{ descricao.errors?.['minlength'].requiredLength }} caracteres. Você digitou apenas {{ descricao.errors?.['minlength'].actualLength }}">
+       </app-message>
+
+
+      </div>
+      </div>
+        <div class="col-3 p-fluid">
+          <label>Valor</label>
+          <p-inputNumber mode="currency" currency="BRL" placeholder="0,00"  name="logradouro" ngModel #logradouro="ngModel" [required]="true">
+
+          </p-inputNumber>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+      <div class="col-6 p-fluid">
+        <label>Categoria {{categoria.value}}</label>
+        <!--Aqui foi feito um binding com a propriedade categorias aonde aparecerá
+           alimentação e transporte-->
+            <!--Quando não tiver nada selecionado aparecerá selecione que é o placeholder-->
+        <p-dropdown [options]="categorias" placeholder="Selecione" #categoria [required]="true"></p-dropdown>
+      </div>
+      <div class="col-6 p-fluid">
+        <label>Pessoa</label>
+        <p-dropdown [options]="pessoas" placeholder="Selecione" [filter]="true " #pessoa [required]="true"></p-dropdown>
+      </div>
+    </div>
+
+
+      <div class="row">
+        <div class="col p-fluid">
+          <label>Observação</label>
+          <textarea pInputTextarea rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button pButton type="submit" label="Salvar" [disabled]="!usuarioForm.valid"></button>
+        <button pButton type="button" label="Novo" class="p-button-info"></button>
+        <a href="javascript:;">Voltar para a pesquisa</a>
+        </div>
+      </div>
+
+  </form>
+</div>
