@@ -1,3 +1,4 @@
+import { LancamentoService } from './lancamentos/lancamento.service';
 
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +23,7 @@ import { AppComponent } from './app.component';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { CoreModule } from './core/core.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { CoreModule } from './core/core.module';
     FormsModule,
     CurrencyMaskModule,
     CoreModule,
+    HttpClientModule,
 
     ButtonModule,
     CalendarModule,
@@ -53,7 +56,7 @@ import { CoreModule } from './core/core.module';
     PessoasModule,
     LancamentosModule
   ],
-  providers: [],
+  providers: [LancamentoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
