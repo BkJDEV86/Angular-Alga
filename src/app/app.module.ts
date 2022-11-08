@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { ButtonModule } from 'primeng/button';
+
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
@@ -40,7 +40,6 @@ import { HttpClientModule } from '@angular/common/http';
     CurrencyMaskModule,
     CoreModule,
     HttpClientModule,
-
     ButtonModule,
     CalendarModule,
     DropdownModule,
