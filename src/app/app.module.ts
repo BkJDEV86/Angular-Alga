@@ -41,6 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     HttpClientModule,
     ButtonModule,
+
     CalendarModule,
     DropdownModule,
     InputMaskModule,
