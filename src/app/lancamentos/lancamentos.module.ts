@@ -1,3 +1,5 @@
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
+
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -12,10 +14,10 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
-import { LancamentosGridComponent } from './lancamentos-grid/lancamentos-grid.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { SharedModule } from '../shared/shared.module';
@@ -25,6 +27,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     FormsModule,
     CurrencyMaskModule,
+
     InputNumberModule,
     InputTextModule,
     ButtonModule,
@@ -34,16 +37,17 @@ import { SharedModule } from '../shared/shared.module';
     CalendarModule,
     SelectButtonModule,
     DropdownModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule,
+    LancamentosRoutingModule
   ],
   declarations: [
     LancamentoCadastroComponent,
     LancamentosPesquisaComponent,
-    LancamentosGridComponent
+
   ],
   exports: [
-    LancamentoCadastroComponent,
-    LancamentosPesquisaComponent,
+
 
   ]
 })

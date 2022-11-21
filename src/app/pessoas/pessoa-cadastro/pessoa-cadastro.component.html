@@ -3,14 +3,15 @@
   <form #usuarioForm="ngForm" (ngSubmit)="salvar(usuarioForm)">
     <div class="row">
       <div class="col-12 p-fluid">
-        <h1>Nova Pessoa</h1>
+        <h1>{{editando ? 'Edição de' : 'Nova' }} Pessoa</h1>
       </div>
     </div>
 
     <div class="row">
       <div class="col-12 p-fluid">
         <label>Nome</label>
-        <input pInputText type="text"  name="nome" ngModel #nome="ngModel" [required]="true" minlength="5" >
+        <input pInputText type="text" name="nome" [(ngModel)]="pessoa.nome" #nome="ngModel" [required]="true"
+        minlength="5">
 
         <app-message [control]="nome.control" error="required"
          text="Mínimo de 5 caracteres"></app-message>
@@ -20,13 +21,15 @@
     <div class="row">
       <div class="col-9 p-fluid">
         <label>Logradouro</label>
-        <input pInputText type="text"  name="logradouro" ngModel #logradouro="ngModel" [required]="true">
+        <input pInputText type="text" name="logradouro" [(ngModel)]="pessoa.endereco.logradouro" #logradouro="ngModel"
+          [required]="true">
         <app-message [control]="logradouro.control" error="required"
          text="Informe um logradouro"></app-message>
       </div>
       <div class="col-3 p-fluid">
         <label>Número</label>
-        <input pInputText type="text"  name="numero" ngModel #numero="ngModel" [required]="true">
+        <input pInputText type="text" name="numero" [(ngModel)]="pessoa.endereco.numero" #numero="ngModel"
+          [required]="true">
         <app-message [control]="numero.control" error="required"
          text="Informe um numero"></app-message>
 
@@ -36,17 +39,19 @@
     <div class="row">
       <div class="col-4 p-fluid">
         <label>Complemento</label>
-        <input pInputText type="text">
+        <input pInputText type="text" name="complemento" [(ngModel)]="pessoa.endereco.complemento">
       </div>
       <div class="col-4 p-fluid">
         <label>Bairro</label>
-        <input pInputText type="text"  name="bairro" ngModel #bairro="ngModel" [required]="true">
+        <input pInputText type="text" name="bairro" [(ngModel)]="pessoa.endereco.bairro" #bairro="ngModel"
+          [required]="true">
         <app-message [control]="bairro.control" error="required"
          text="Informe um bairro"></app-message>
       </div>
       <div class="col-4 p-fluid">
         <label>CEP</label>
-        <p-inputMask mask="99.999-999"  name="cep" ngModel #cep="ngModel" [required]="true"></p-inputMask>
+        <p-inputMask name="cep" mask="99.999-999" [(ngModel)]="pessoa.endereco.cep" #cep="ngModel" [required]="true">
+        </p-inputMask>
         <app-message [control]="cep.control" error="required"
          text="Informe um cep"></app-message>
       </div>
@@ -55,13 +60,15 @@
     <div class="row">
       <div class="col-6 p-fluid">
         <label>Cidade</label>
-        <input pInputText type="text"  name="cidade" ngModel #cidade="ngModel" [required]="true">
+        <input pInputText type="text" name="cidade" [(ngModel)]="pessoa.endereco.cidade" #cidade="ngModel"
+          [required]="true">
         <app-message [control]="cidade.control" error="required"
          text="Informe uma cidade"></app-message>
       </div>
       <div class="col-6 p-fluid">
         <label>Estado</label>
-        <input pInputText type="text"  name="estado" ngModel #estado="ngModel" [required]="true">
+        <input pInputText type="text" name="estado" [(ngModel)]="pessoa.endereco.estado" #estado="ngModel"
+          [required]="true">
         <app-message [control]=" estado.control" error="required"
          text="Informe um estado"></app-message>
       </div>
@@ -70,8 +77,8 @@
     <div class="row">
       <div class="col-12">
         <button pButton type="submit" label="Salvar" [disabled]="!usuarioForm.valid" ></button>
-        <button pButton type="button" label="Novo" class="p-button-info"></button>
-        <a href="javascript:;">Voltar para a pesquisa</a>
+        <button pButton type="button" label="Novo" class="p-button-info" (click)="nova(usuarioForm)"></button>
+        <a [routerLink]="['/pessoas']">Voltar para a pesquisa</a>
       </div>
     </div>
 

@@ -57,3 +57,8 @@ color: #fff
 .navbar-menuitem a:hover {
   color: #fff;
 }
+
+/* Aqui abaixo é uma classe puxando outra */
+.navbar-menuitem.ativo {
+  background-color: #494541;
+}

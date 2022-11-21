@@ -1,15 +1,15 @@
 <div class="container">
-  <form #usuarioForm="ngForm" (ngSubmit)="salvar(usuarioForm)" >
+  <form #usuarioForm="ngForm" autocomplete="off" (ngSubmit)="salvar(usuarioForm)" >
 
     <div class="row">
 
-      <div class="col">
-        <h1>Novo Lançamento</h1>
+      <div class="col"> <!--Aqui abaixo é para mudar o template-->
+        <h1>{{ editando ? 'Edição de' : 'Novo' }} Lançamento</h1>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <p-selectButton [options]="tipos" #tipo></p-selectButton>
+        <p-selectButton [options]="tipos" #tipo name="tipo" [(ngModel)]="lancamento.tipo"></p-selectButton>
       </div>
     </div>
       <!--o p-fluid faz com que ocupe todo o espaço-->
@@ -21,7 +21,7 @@
         <!--o readonlyinput falso é para o usuário poder digitar o dia no calendário -->
         <!--o showicon falso é para  não ter um botão que apareça um calendário ao clicar o botão-->
         <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="false"
-        name="vencimento" ngModel #vencimento="ngModel" [required]="true">
+        [(ngModel)]="lancamento.dataVencimento" name="dataVencimento" #vencimento="ngModel" [required]="true">
         </p-calendar>
 
 
@@ -34,7 +34,7 @@
            <!--Após ter criado uma variável #tipo , nós fizemos uma interpolação. Caso o valor
         seja RECEITA aparecerá recebimento do contrário Pagamento-->
         <label>{{tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
-        <p-calendar dateFormat="dd/mm/yy>"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy>" name="dataPagamento" [(ngModel)]="lancamento.dataPagamento"></p-calendar>
 
       </div>
       </div>
@@ -45,7 +45,7 @@
         <!--O name é importante porque dá o nome para o controle do ngModel no formulário-->
         <!--A função do ng model é registrar o controle dentro do formulário-->
         <!--A variável descrição exporta a variável tendo acesso a instância de diretiva ngModel-->
-        <input pInputText type="text" name="descricao" ngModel #descricao="ngModel" [required]="true" minlength="5">
+        <input pInputText type="text" name="descricao" [(ngModel)]="lancamento.descricao" #descricao="ngModel" [required]="true" minlength="5">
 
          <!--O control está fazendo referência a variável acima que faz referência
         à instância de Ngmodel-->
@@ -81,7 +81,8 @@
       </div>
         <div class="col-3 p-fluid">
           <label>Valor</label>
-          <p-inputNumber mode="currency" currency="BRL" placeholder="0,00"  name="logradouro" ngModel #logradouro="ngModel" [required]="true">
+          <p-inputNumber mode="currency" currency="BRL" locale="pt-BR" placeholder="0,00" ngModel name="valor"   [(ngModel)]="lancamento.valor"
+          #valor="ngModel" [required]="true">
 
           </p-inputNumber>
         </div>
@@ -95,11 +96,12 @@
         <!--Aqui foi feito um binding com a propriedade categorias aonde aparecerá
            alimentação e transporte-->
             <!--Quando não tiver nada selecionado aparecerá selecione que é o placeholder-->
-        <p-dropdown [options]="categorias" placeholder="Selecione" #categoria [required]="true"></p-dropdown>
+        <p-dropdown [options]="categorias" placeholder="Selecione"  [(ngModel)]="lancamento.categoria.codigo"
+        name="categoria" #categoria [required]="true"></p-dropdown>
       </div>
       <div class="col-6 p-fluid">
         <label>Pessoa</label>
-        <p-dropdown [options]="pessoas" placeholder="Selecione" [filter]="true " #pessoa [required]="true"></p-dropdown>
+        <p-dropdown [options]="pessoas" placeholder="Selecione" name="pessoa" [(ngModel)]="lancamento.pessoa.codigo" [filter]="true " #pessoa [required]="true"></p-dropdown>
       </div>
     </div>
 
@@ -107,15 +109,15 @@
       <div class="row">
         <div class="col p-fluid">
           <label>Observação</label>
-          <textarea pInputTextarea rows="3"></textarea>
+          <textarea pInputTextarea rows="3" name="observacao" [(ngModel)]="lancamento.observacao"></textarea>
         </div>
       </div>
 
       <div class="row">
         <div class="col">
           <button pButton type="submit" label="Salvar" [disabled]="!usuarioForm.valid"></button>
-        <button pButton type="button" label="Novo" class="p-button-info"></button>
-        <a href="javascript:;">Voltar para a pesquisa</a>
+          <button pButton type="button" label="Novo" class="p-button-info" (click)="novo(usuarioForm)"></button>
+        <a routerLink="/lancamentos">Voltar para a pesquisa</a>
         </div>
       </div>
 

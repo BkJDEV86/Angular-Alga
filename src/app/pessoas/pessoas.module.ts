@@ -1,6 +1,6 @@
 
 
-import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
+
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 import { NgModule } from '@angular/core';
@@ -18,18 +18,22 @@ import { TooltipModule } from 'primeng/tooltip';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { SharedModule } from '../shared/shared.module';
 import { InputMaskModule } from 'primeng/inputmask';
+import { RouterModule } from '@angular/router';
+import { PessoasRoutingModule } from './pessoas-routing.module';
 
 
 @NgModule({
   declarations: [
       PessoaCadastroComponent,
       PessoasPesquisaComponent,
-      PessoasGridComponent
+
   ],
   imports: [
     CommonModule,
     FormsModule,
     CurrencyMaskModule,
+    RouterModule,
+    PessoasRoutingModule,
     InputNumberModule,
     InputTextModule,
     ButtonModule,
@@ -43,9 +47,10 @@ import { InputMaskModule } from 'primeng/inputmask';
     InputMaskModule
 
   ],
+  /* Não precisa mais exportar só declarar pois ao acessar as rotas
+  o acesso agora é direto */
   exports: [
-    PessoaCadastroComponent,
-      PessoasPesquisaComponent
+
   ]
 })
 export class PessoasModule { }

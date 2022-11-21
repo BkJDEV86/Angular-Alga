@@ -1,62 +1,43 @@
-import { LancamentoService } from './lancamentos/lancamento.service';
 
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ButtonModule } from 'primeng/button';
 
-import { CalendarModule } from 'primeng/calendar';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputMaskModule } from 'primeng/inputmask';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { MessageModule } from 'primeng/message';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { TableModule } from 'primeng/table';
-import { TabViewModule } from 'primeng/tabview';
-import { TooltipModule } from 'primeng/tooltip';
-import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { AppComponent } from './app.component';
-
-import { PessoasModule } from './pessoas/pessoas.module';
-import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { CoreModule } from './core/core.module';
-import { HttpClientModule } from '@angular/common/http';
+import { LancamentosModule } from './lancamentos/lancamentos.module';
+import { PessoasModule } from './pessoas/pessoas.module';
+
+import { SegurancaModule } from './seguranca/seguranca.module';
+
+
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
 
-
-
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    CurrencyMaskModule,
-    CoreModule,
     HttpClientModule,
-    ButtonModule,
+    /*Agora ele já sabe a configuração
+    de rotas, bastando colocar <router-outlet></router-outlet> no
+    app.component.html */
+    LancamentosModule,
+    CoreModule,
 
-    CalendarModule,
-    DropdownModule,
-    InputMaskModule,
-    InputNumberModule,
-    InputTextModule,
-    InputTextareaModule,
-    MessageModule,
-    SelectButtonModule,
-    TableModule,
-    TabViewModule,
-    TooltipModule,
     PessoasModule,
-    LancamentosModule
+    SegurancaModule,
+    AppRoutingModule,
+
   ],
-  providers: [LancamentoService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
