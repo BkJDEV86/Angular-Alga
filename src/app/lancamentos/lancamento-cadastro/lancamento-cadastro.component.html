@@ -66,7 +66,6 @@
  <app-message [control]="descricao" error="minlength"
           text="Mínimo de {{ descricao.errors?.['minlength'].requiredLength }} caracteres. Você digitou apenas {{ descricao.errors?.['minlength'].actualLength }}">
         </app-message>
-
           Mínimo de {{ descricao.errors?.['minlength'].requiredLength }} caracteres. Você digitou apenas {{
           descricao.errors?.['minlength'].actualLength }}
         -->
@@ -92,7 +91,7 @@
 
     <div class="row">
       <div class="col-6 p-fluid">
-        <label>Categoria {{categoria.value}}</label>
+        <label>Categoria </label>
         <!--Aqui foi feito um binding com a propriedade categorias aonde aparecerá
            alimentação e transporte-->
             <!--Quando não tiver nada selecionado aparecerá selecione que é o placeholder-->

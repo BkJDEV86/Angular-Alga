@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient,  HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Lancamento } from '../core/model';
@@ -37,12 +37,6 @@ export class LancamentoService {
     private datePipe: DatePipe) { }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
-
-
-
-
-
-
    /* HttpParams é um componente imutável, o que significa que toda alteração feita em um
    objeto deste tipo, irá resultar em um novo objeto e não irá alterar a instância atual.
     Portanto, toda vez que chamarmos um método desta classe que deve alterar o seu estado,
@@ -67,8 +61,8 @@ export class LancamentoService {
     }
 
 
-    return this.http.get(`${this.lancamentosUrl}?resumo`, { params })
-    .toPromise()
+    return firstValueFrom(this.http.get(`${this.lancamentosUrl}?resumo`, { params }))
+
     .then((response: any) => {
       const lancamentos = response['content'];
 
@@ -87,8 +81,8 @@ export class LancamentoService {
    excluir(codigo: number): Promise<void> {
 
 
-  return this.http.delete<void>(`${this.lancamentosUrl}/${codigo}`)
-    .toPromise();
+  return firstValueFrom(this.http.delete<void>(`${this.lancamentosUrl}/${codigo}`))
+
 }
 
 adicionar(lancamento: Lancamento): Promise<Lancamento> {
@@ -115,8 +109,8 @@ adicionar(lancamento: Lancamento): Promise<Lancamento> {
 buscarPorCodigo(codigo: number): Promise<Lancamento> {
 
 
-  return this.http.get(`${this.lancamentosUrl}/${codigo}`)
-    .toPromise()
+  return firstValueFrom(this.http.get(`${this.lancamentosUrl}/${codigo}`))
+
     .then((response: any) => {
       this.converterStringsParaDatas([response]);
 

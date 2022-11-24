@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';

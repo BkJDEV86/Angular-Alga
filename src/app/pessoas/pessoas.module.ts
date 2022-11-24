@@ -1,56 +1,41 @@
 
 
 
-import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
-import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
+import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { SharedModule } from '../shared/shared.module';
-import { InputMaskModule } from 'primeng/inputmask';
-import { RouterModule } from '@angular/router';
 import { PessoasRoutingModule } from './pessoas-routing.module';
 
+import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
+import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 
 @NgModule({
   declarations: [
-      PessoaCadastroComponent,
-      PessoasPesquisaComponent,
-
+    PessoaCadastroComponent,
+    PessoasPesquisaComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    CurrencyMaskModule,
     RouterModule,
-    PessoasRoutingModule,
-    InputNumberModule,
+
     InputTextModule,
     ButtonModule,
     TableModule,
     TooltipModule,
-    InputTextareaModule,
-    CalendarModule,
-    SelectButtonModule,
-    DropdownModule,
+    InputMaskModule,
+
     SharedModule,
-    InputMaskModule
-
+    PessoasRoutingModule
   ],
-  /* Não precisa mais exportar só declarar pois ao acessar as rotas
-  o acesso agora é direto */
-  exports: [
-
-  ]
+  exports: []
 })
 export class PessoasModule { }

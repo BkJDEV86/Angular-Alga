@@ -20,7 +20,7 @@
           <div class="col-12">
             <!--Abaixo ao colocar a senha errada vai ficar vazio a caixa de texto-->
               <button pButton type="submit" label="Login" [disabled]="loginForm.invalid"
-                  (click)="login(usuario.value, senha.value); senha.value= '';"></button>
+                  (click)="login(usuario.value, senha.value); senha.value='';"></button>
           </div>
 
       </div>
