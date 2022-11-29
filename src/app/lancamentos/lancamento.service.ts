@@ -98,7 +98,7 @@ adicionar(lancamento: Lancamento): Promise<Lancamento> {
  atualizar(lancamento: Lancamento): Promise<Lancamento> {
 
 
-  return firstValueFrom(this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento, ))
+  return firstValueFrom(this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento ))
     .then((response: any) => {
     this.converterStringsParaDatas([response]);
 

@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LancamentoFiltro, LancamentoService } from '../lancamento.service';
+import { Title } from '@angular/platform-browser';
+
 import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { Title } from '@angular/platform-browser';
+import { LancamentoFiltro, LancamentoService } from './../lancamento.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -19,7 +21,7 @@ export class LancamentosPesquisaComponent implements OnInit  {
   totalRegistros: number = 0
 
   /* É o  this.lancamentos lá embaixo*/
-  lancamentos: any[] = [] ;
+  lancamentos: any[] = [];
 
   /* Aqui agente consegue ter acesso ao objeto que representa um componente de primeg */
   @ViewChild('tabela') grid!: Table;

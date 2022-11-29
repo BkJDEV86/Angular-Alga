@@ -17,7 +17,7 @@ const routes: Routes = [
 
   imports: [
 
-    RouterModule.forRoot(routes), /*Agora ele já sabe a configuração
+    RouterModule.forRoot(routes) /*Agora ele já sabe a configuração
     de rotas, bastando colocar <router-outlet></router-outlet> no
     app.component.html */
 
