@@ -11,7 +11,8 @@
   </div>
 
     <ul class="navbar-menu" [hidden]="!exibindoMenu">
-      <li class="navbar-usuario">José da Silva</li>
+      <!--Aqui abaixo é para aparecer o usuário logado no menu-->
+      <li class="navbar-usuario">{{ usuarioLogado }}</li>
       <!--Aqui o routerlink entende que vai ser aplicado a classe ativo
          somente se tiver na rota lancamentos-->
       <li class="navbar-menuitem" routerLinkActive="ativo"><a routerLink="/lancamentos">Lançamentos</a></li>

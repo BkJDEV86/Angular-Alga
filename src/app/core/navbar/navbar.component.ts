@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from './../../seguranca/auth.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
+/*Aqui abaixo é para colocar o administrador local logado */
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  exibindoMenu: boolean = false;
+  usuarioLogado: string = ''
 
-  ngOnInit(): void {
+  constructor(private auth: AuthService) { }
+
+  ngOnInit() {
+    this.usuarioLogado = this.auth.jwtPayload?.nome;
   }
-
-  exibindoMenu = false;
 
 }
