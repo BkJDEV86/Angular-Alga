@@ -5,6 +5,7 @@ import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api'
 import { Table } from 'primeng/table';
 
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { AuthService } from 'src/app/seguranca/auth.service';
 import { LancamentoFiltro, LancamentoService } from './../lancamento.service';
 
 @Component({
@@ -27,6 +28,7 @@ export class LancamentosPesquisaComponent implements OnInit  {
   @ViewChild('tabela') grid!: Table;
 
   constructor(
+    private auth: AuthService,
     private lancamentoService: LancamentoService,
     private messageService: MessageService,
     private errorHandler: ErrorHandlerService,
@@ -94,6 +96,9 @@ export class LancamentosPesquisaComponent implements OnInit  {
       })
   }
 
+  naoTemPermissao(permissao: string) {
+    return !this.auth.temPermissao(permissao);
+  }
 
 
 }

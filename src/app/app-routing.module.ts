@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { NaoAutorizadoComponent } from "./core/nao-autorizado.component";
 
 import { PaginaNaoEncontradaComponent } from "./core/pagina-nao-encontrada.component";
 
@@ -7,6 +8,7 @@ import { PaginaNaoEncontradaComponent } from "./core/pagina-nao-encontrada.compo
 const routes: Routes = [
   /* O path vazio por padrão é o / . E o pathMatch: 'full' é o caminho completo, no caso vazio. */
   { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
+  { path: 'nao-autorizado', component: NaoAutorizadoComponent },
 
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent},
   /* O símbolo de ** é para qualquer coisa que não for encontrada */

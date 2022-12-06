@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth.guard';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginFormComponent } from './login-form/login-form.component';
@@ -6,6 +7,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MoneyHttpInterceptor } from './money-http-interceptor';
 
 
 export function tokenGetter(): string {
@@ -35,6 +38,14 @@ Já para "http://localhost:8080/oauth/token" não ocorrerá nenhuma interceptaç
 
     SegurancaRoutingModule
   ],
-  providers: [JwtHelperService]
+  providers: [JwtHelperService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MoneyHttpInterceptor,
+      multi: true
+    },
+    AuthGuard
+
+  ]
 })
 export class SegurancaModule { }

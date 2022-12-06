@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Lancamento } from '../core/model';
 import { firstValueFrom } from 'rxjs';
+import { environment } from './../../environments/environment';
 
 
 /* Aqui é definido um contrato, ao invés de colocar any podemos colocar
@@ -31,10 +32,12 @@ export class LancamentoService {
 
 
 
-  lancamentosUrl = 'http://localhost:8080/lancamentos';
+  lancamentosUrl: string;
 
   constructor(private http: HttpClient,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe) {
+      this.lancamentosUrl = `${environment.apiUrl}/lancamentos`
+    }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
    /* HttpParams é um componente imutável, o que significa que toda alteração feita em um
