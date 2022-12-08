@@ -6,20 +6,22 @@ import { PessoaCadastroComponent } from "./pessoa-cadastro/pessoa-cadastro.compo
 import { PessoasPesquisaComponent } from "./pessoas-pesquisa/pessoas-pesquisa.component";
 
 const routes: Routes = [
+   /*Como já foi alterado pelo app-routing-modules teremos que tirar os lanaçemntos abaixo
+  para não haver lançanmentos/lançamentos  . Esta configuração é o que precisamos para fazer o lazy loading */
   {
-    path: 'pessoas',
+    path: '',
     component: PessoasPesquisaComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_PESQUISAR_PESSOA'] }
   },
   {
-    path: 'pessoas/nova',
+    path: 'nova',
     component: PessoaCadastroComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_CADASTRAR_PESSOA'] }
   },
   {
-    path: 'pessoas/:codigo',
+    path: ':codigo',
     component: PessoaCadastroComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_CADASTRAR_PESSOA'] }

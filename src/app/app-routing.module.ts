@@ -6,6 +6,10 @@ import { PaginaNaoEncontradaComponent } from "./core/pagina-nao-encontrada.compo
 
 
 const routes: Routes = [
+
+  /* Implementando o carregamento tardio(lazy-loading)*/
+  { path: 'lancamentos', loadChildren: () => import('../app/lancamentos/lancamentos.module').then(m => m.LancamentosModule) },
+  { path: 'pessoas', loadChildren: () => import('../app/pessoas/pessoas.module').then(m => m.PessoasModule) },
   /* O path vazio por padrão é o / . E o pathMatch: 'full' é o caminho completo, no caso vazio. */
   { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },

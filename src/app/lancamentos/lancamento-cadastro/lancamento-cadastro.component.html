@@ -1,5 +1,5 @@
 <div class="container">
-  <form #usuarioForm="ngForm" autocomplete="off" (ngSubmit)="salvar(usuarioForm)" >
+  <form  autocomplete="off" (ngSubmit)="salvar()" [formGroup]="formulario">
 
     <div class="row">
 
@@ -9,7 +9,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <p-selectButton [options]="tipos" #tipo name="tipo" [(ngModel)]="lancamento.tipo"></p-selectButton>
+        <p-selectButton [options]="tipos" name="tipo" formControlName="tipo"></p-selectButton>
       </div>
     </div>
       <!--o p-fluid faz com que ocupe todo o espaço-->
@@ -21,11 +21,11 @@
         <!--o readonlyinput falso é para o usuário poder digitar o dia no calendário -->
         <!--o showicon falso é para  não ter um botão que apareça um calendário ao clicar o botão-->
         <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="false"
-        [(ngModel)]="lancamento.dataVencimento" name="dataVencimento" #vencimento="ngModel" [required]="true">
+        name="dataVencimento" formControlName="dataVencimento">
         </p-calendar>
 
 
-          <app-message [control]="vencimento.control" error="required"
+          <app-message [control]="formulario.get('dataVencimento')" error="required"
         text="Informe uma data de vencimento"></app-message>
 
 
@@ -33,8 +33,8 @@
        <div class="col-3 p-fluid">
            <!--Após ter criado uma variável #tipo , nós fizemos uma interpolação. Caso o valor
         seja RECEITA aparecerá recebimento do contrário Pagamento-->
-        <label>{{tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
-        <p-calendar dateFormat="dd/mm/yy>" name="dataPagamento" [(ngModel)]="lancamento.dataPagamento"></p-calendar>
+        <label>{{formulario.get('tipo')?.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
+        <p-calendar dateFormat="dd/mm/yy>" name="dataPagamento" formControlName="dataPagamento"></p-calendar>
 
       </div>
       </div>
@@ -45,12 +45,12 @@
         <!--O name é importante porque dá o nome para o controle do ngModel no formulário-->
         <!--A função do ng model é registrar o controle dentro do formulário-->
         <!--A variável descrição exporta a variável tendo acesso a instância de diretiva ngModel-->
-        <input pInputText type="text" name="descricao" [(ngModel)]="lancamento.descricao" #descricao="ngModel" [required]="true" minlength="5">
+        <input pInputText type="text" name="descricao" formControlName="descricao">
 
          <!--O control está fazendo referência a variável acima que faz referência
         à instância de Ngmodel-->
 
-          <app-message [control]="descricao.control" error="required"
+          <app-message [control]="formulario.get('descricao')" error="required"
          text="Informe uma descricão"></app-message>
 
         <!--Como esta propriedade errors pode ser nula, o Typescript reporta um problema na
@@ -68,57 +68,60 @@
         </app-message>
           Mínimo de {{ descricao.errors?.['minlength'].requiredLength }} caracteres. Você digitou apenas {{
           descricao.errors?.['minlength'].actualLength }}
+          <div *ngIf="descricao.hasError('minlength') && descricao.dirty" class="p-message p-message-error">
+            Você digitou apenas {{ descricao?.errors?.['minlength'].actualLength }}"
         -->
 
-<div *ngIf="descricao.hasError('minlength') && descricao.dirty" class="p-message p-message-error">
-  <app-message [control]="descricao.control" error="minlength"
-         text="Mínimo de {{ descricao.errors?.['minlength'].requiredLength }} caracteres. Você digitou apenas {{ descricao.errors?.['minlength'].actualLength }}">
+
+  <app-message [control]="formulario.get('descricao')" error="minlength"
+         text="Mínimo de {{ formulario.get('descricao')?.errors?.['minlength']?.requiredLength }} caracteres.">
        </app-message>
 
 
       </div>
-      </div>
+
         <div class="col-3 p-fluid">
           <label>Valor</label>
-          <p-inputNumber mode="currency" currency="BRL" locale="pt-BR" placeholder="0,00" ngModel name="valor"   [(ngModel)]="lancamento.valor"
-          #valor="ngModel" [required]="true">
+          <p-inputNumber mode="currency" currency="BRL" locale="pt-BR" placeholder="0,00" name="valor"
+          formControlName="valor">
 
           </p-inputNumber>
         </div>
+      </div>
 
 
-    </div>
 
     <div class="row">
-      <div class="col-6 p-fluid">
+      <div class="col-6 p-fluid" formGroupName="categoria">
         <label>Categoria </label>
         <!--Aqui foi feito um binding com a propriedade categorias aonde aparecerá
            alimentação e transporte-->
             <!--Quando não tiver nada selecionado aparecerá selecione que é o placeholder-->
-        <p-dropdown [options]="categorias" placeholder="Selecione"  [(ngModel)]="lancamento.categoria.codigo"
-        name="categoria" #categoria [required]="true"></p-dropdown>
+        <p-dropdown [options]="categorias" placeholder="Selecione"
+        name="categoria"  formControlName="codigo"></p-dropdown>
       </div>
       <div class="col-6 p-fluid">
         <label>Pessoa</label>
-        <p-dropdown [options]="pessoas" placeholder="Selecione" name="pessoa" [(ngModel)]="lancamento.pessoa.codigo" [filter]="true " #pessoa [required]="true"></p-dropdown>
+        <p-dropdown [options]="pessoas" placeholder="Selecione" name="pessoa" [filter]="true "  formControlName="codigo"></p-dropdown>
       </div>
     </div>
 
 
       <div class="row">
-        <div class="col p-fluid">
+        <div class="col p-fluid" formGroupName="pessoa">
           <label>Observação</label>
-          <textarea pInputTextarea rows="3" name="observacao" [(ngModel)]="lancamento.observacao"></textarea>
+          <textarea pInputTextarea rows="3" name="observacao" formControlName="observacao"></textarea>
         </div>
       </div>
 
       <div class="row">
         <div class="col">
-          <button pButton type="submit" label="Salvar" [disabled]="!usuarioForm.valid"></button>
-          <button pButton type="button" label="Novo" class="p-button-info" (click)="novo(usuarioForm)"></button>
+          <button pButton type="submit" label="Salvar" [disabled]="formulario.invalid"></button>
+          <button pButton type="button" label="Novo" class="p-button-info" (click)="novo()"></button>
         <a routerLink="/lancamentos">Voltar para a pesquisa</a>
         </div>
       </div>
+
 
   </form>
 </div>

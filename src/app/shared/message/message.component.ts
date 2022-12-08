@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-message',
@@ -42,7 +42,7 @@ Uma forma de resolver esse problema é passar uma variável do tipo control para
     /* Além disso, como a variável control pode estar indefinida em algumas situações, é
      interessante adaptar o código do componente de mensagem para esse caso  */
   @Input() error: string = '';
-  @Input() control?: FormControl;
+  @Input() control?:  AbstractControl | FormControl | null;;
   @Input() text: string = '';
 
   /*Aqui abaixo é colocado this.error pois não sabemos se o erro é required

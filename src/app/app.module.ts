@@ -7,8 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { LancamentosModule } from './lancamentos/lancamentos.module';
-import { PessoasModule } from './pessoas/pessoas.module';
+
 
 import { SegurancaModule } from './seguranca/seguranca.module';
 
@@ -29,10 +28,11 @@ import { SegurancaModule } from './seguranca/seguranca.module';
     /*Agora ele já sabe a configuração
     de rotas, bastando colocar <router-outlet></router-outlet> no
     app.component.html */
-    LancamentosModule,
+    /* Removemos o LancamentosModule e o PessoasModule para que não seja carregado inicialmente */
+    //LancamentosModule,
     CoreModule,
 
-    PessoasModule,
+    //PessoasModule,
     SegurancaModule,
     AppRoutingModule,
 
