@@ -50,7 +50,7 @@
          <!--O control está fazendo referência a variável acima que faz referência
         à instância de Ngmodel-->
 
-          <app-message [control]="formulario.get('descricao')" error="required"
+          <app-message [control]="formulario.get('descricao')" error="obrigatoriedade"
          text="Informe uma descricão"></app-message>
 
         <!--Como esta propriedade errors pode ser nula, o Typescript reporta um problema na
@@ -73,8 +73,8 @@
         -->
 
 
-  <app-message [control]="formulario.get('descricao')" error="minlength"
-         text="Mínimo de {{ formulario.get('descricao')?.errors?.['minlength']?.requiredLength }} caracteres.">
+  <app-message [control]="formulario.get('descricao')" error="tamanhoMinimo"
+         text="Mínimo de {{ formulario.get('descricao')?.errors?.['tamanhoMinimo']?.tamanho  }} caracteres.">
        </app-message>
 
 
@@ -90,29 +90,31 @@
       </div>
 
 
-
-    <div class="row">
-      <div class="col-6 p-fluid" formGroupName="categoria">
-        <label>Categoria </label>
-        <!--Aqui foi feito um binding com a propriedade categorias aonde aparecerá
+<!--Aqui foi feito um binding com a propriedade categorias aonde aparecerá
            alimentação e transporte-->
             <!--Quando não tiver nada selecionado aparecerá selecione que é o placeholder-->
-        <p-dropdown [options]="categorias" placeholder="Selecione"
-        name="categoria"  formControlName="codigo"></p-dropdown>
-      </div>
-      <div class="col-6 p-fluid">
-        <label>Pessoa</label>
-        <p-dropdown [options]="pessoas" placeholder="Selecione" name="pessoa" [filter]="true "  formControlName="codigo"></p-dropdown>
-      </div>
-    </div>
+            <div class="row">
+              <div class="col-6 p-fluid" formGroupName="categoria">
+                <label>Categoria </label>
+                <p-dropdown [options]="categorias" placeholder="Selecione" name="categoria"
+                  formControlName="codigo"></p-dropdown>
+              </div>
+            </div>
 
+            <div class="row">
+              <div class="col-6 p-fluid" formGroupName="pessoa">
+                <label>Pessoa</label>
+                <p-dropdown [options]="pessoas" placeholder="Selecione" name="pessoa" [filter]="true "
+                  formControlName="codigo"></p-dropdown>
+              </div>
+            </div>
 
-      <div class="row">
-        <div class="col p-fluid" formGroupName="pessoa">
-          <label>Observação</label>
-          <textarea pInputTextarea rows="3" name="observacao" formControlName="observacao"></textarea>
-        </div>
-      </div>
+            <div class="row">
+              <div class="col p-fluid">
+                <label>Observação</label>
+                <textarea pInputTextarea rows="3" name="observacao" formControlName="observacao"></textarea>
+              </div>
+            </div>
 
       <div class="row">
         <div class="col">
