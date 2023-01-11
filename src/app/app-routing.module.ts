@@ -13,7 +13,7 @@ const routes: Routes = [
   /* O path vazio por padrão é o / . E o pathMatch: 'full' é o caminho completo, no caso vazio. */
   { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
-
+  { path: 'dashboard', loadChildren: () => import('../app/dashboard/dashboard.module').then(m => m.DashboardModule) },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent},
   /* O símbolo de ** é para qualquer coisa que não for encontrada */
   { path: '**', redirectTo:  'pagina-nao-encontrada'}
