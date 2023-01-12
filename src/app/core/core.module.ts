@@ -1,3 +1,4 @@
+import { DashboardService } from './../dashboard/dashboard.service';
 import { AuthService } from './../seguranca/auth.service';
 import { Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -20,6 +21,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
 import { ErrorHandlerService } from './error-handler.service';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
@@ -62,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MessageService,
     ConfirmationService,
     Title,
+
     TranslateService
   ]
 })
