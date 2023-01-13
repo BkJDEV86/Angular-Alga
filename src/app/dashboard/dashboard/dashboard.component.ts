@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './../dashboard.service';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,8 +15,45 @@ export class DashboardComponent implements OnInit {
   pieChartData: any;
   lineChartData: any;
 
+  //Baseando-se nas documentações da versão 3.6 do Chart.js, o objeto "context" do callback
+  // teve algumas mudanças e deverá também ser colocado dentro um outro objeto chamado
+  //plugins. Vamos invés de criar apenas um objeto chamado options que atenderá aos dois
+  //gráficos, criar um options para cada um.
+
+  optionsLine = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context: any): any => {
+            let label = context.dataset.label || '';
+            let value = context.raw || 0;
+            let formattedValue = this.decimalPipe.transform(value, '1.2-2', 'pt_BR');
+            return `${label}: ${formattedValue}`;
+          }
+        }
+      }
+    }
+  }
+
+  optionsPie = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context: any): any => {
+            let label = context.label || '';
+            let value = context.raw || 0;
+            let formattedValue = this.decimalPipe.transform(value, '1.2-2', 'pt_BR');
+            return `${label}: ${formattedValue}`;
+          }
+        }
+      }
+    }
+  }
+
+
 // Declarando o serviço...
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService,
+    private decimalPipe: DecimalPipe) { }
 
   // Inicializando o gráfico de pizza quando o ngOnInit é inicializado
   ngOnInit() {

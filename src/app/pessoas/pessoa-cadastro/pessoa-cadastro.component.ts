@@ -10,6 +10,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 import { Pessoa } from 'src/app/core/model';
 import { PessoaService } from '../pessoa.service';
+import { Contato } from './../../core/model';
 
 @Component({
   selector: 'app-pessoa-cadastro',
@@ -19,6 +20,9 @@ import { PessoaService } from '../pessoa.service';
 export class PessoaCadastroComponent implements OnInit {
 
   pessoa = new Pessoa();
+  exbindoFormularioContato = false;
+  contato?: Contato;
+  contatoIndex?: number;
 
   constructor(
     private pessoaService: PessoaService,
@@ -39,6 +43,35 @@ export class PessoaCadastroComponent implements OnInit {
       this.carregarPessoa(codigoPessoa);
     }
   }
+
+  // Tem que ter o índice para poder alterar o contato corretamente!!!
+  prepararNovoContato() {
+    this.exbindoFormularioContato = true;
+    this.contato = new Contato();
+    this.contatoIndex = this.pessoa.contatos.length;
+  }
+
+
+  prepararEdicaoContato(contato: Contato, index: number) {
+    this.contato = this.clonarContato(contato);
+    this.exbindoFormularioContato = true;
+    this.contatoIndex = index;
+  }
+
+  confirmarContato(frm: NgForm) {
+    this.pessoa.contatos[this.contatoIndex!] = this.clonarContato(this.contato!);
+    this.exbindoFormularioContato = false;
+    // É preciso resetar a lista de contatos para não aparecer os campos pedindo para
+    // inserir
+    frm.reset();
+  }
+
+  // É preciso criar uma nova instância de contato ante de dar o push pois senão ele utilizara´
+  // a mesma instância de contato e apagará os dados na tela
+  clonarContato(contato: Contato): Contato {
+    return new Contato(contato.codigo, contato.nome, contato.email, contato.telefone);
+  }
+
 
   get editando() {
     return Boolean(this.pessoa.codigo)

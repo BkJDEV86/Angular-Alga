@@ -1,10 +1,12 @@
-import { DashboardService } from './../dashboard/dashboard.service';
+import { RelatoriosService } from './../relatorios/relatorios.service';
+
 import { AuthService } from './../seguranca/auth.service';
 import { Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import localePt from '@angular/common/locales/pt';
+
 
 import { NgModule } from '@angular/core';
 /* O calendário do PrimeNG é apresentado, por padrão, em inglês. Para alterar esta
@@ -64,7 +66,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MessageService,
     ConfirmationService,
     Title,
-
+    RelatoriosService,
     TranslateService
   ]
 })
