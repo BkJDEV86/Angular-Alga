@@ -15,9 +15,10 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { HttpClientModule } from '@angular/common/http';
+import {FileUploadModule} from 'primeng/fileupload'
+import {ProgressSpinnerModule} from 'primeng/progressspinner'
 
-
-import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
+import { LancamentoCadastroComponent }  from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { SharedModule } from '../shared/shared.module';
@@ -28,7 +29,7 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     CurrencyMaskModule,
-
+    FileUploadModule,
     InputNumberModule,
     InputTextModule,
     ButtonModule,
@@ -40,7 +41,8 @@ import { SharedModule } from '../shared/shared.module';
     DropdownModule,
     SharedModule,
     HttpClientModule,
-    LancamentosRoutingModule
+    LancamentosRoutingModule,
+    ProgressSpinnerModule
   ],
   declarations: [
     LancamentoCadastroComponent,

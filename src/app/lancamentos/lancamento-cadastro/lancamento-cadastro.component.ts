@@ -27,6 +27,8 @@ export class LancamentoCadastroComponent implements OnInit {
     {label: 'Despesa', value: 'DESPESA'},
    ];
 
+   uploadEmAndamento = false;
+
    categorias: any[] = [];
   pessoas: any[] = []
 
@@ -65,6 +67,72 @@ export class LancamentoCadastroComponent implements OnInit {
     this.carregarPessoas()
   }
 
+
+  //Para obtermos acesso ao objeto de response, precisamos acessar a propriedade
+  // "originalEvent" e, dentro da mesma, acessamos a propriedade "body":
+  // Assim teremos acesso ao objeto da resposta. Ainda dentro do mesmo método
+  // precisaremos fazer uma outra alteração, para que no momento em que formos acessar
+  // o anexo possamos ser redirecionados corretamente para a url na AWS.
+
+//Nosso backend está retornando um protocolo padrão com "\\\\" no início na url, o que
+// significa que o próprio navegador será o encarregado de entender se o protocolo
+//utilizado seria http ou https, porém, o protocolo assumido pelo navegador acaba sendo
+//o "file", o que implica que não seremos redirecionados corretamente para o servidor da
+//Amazon, no S3.
+
+//Precisaremos manualmente substituir esse protocolo padrão para o https, e o faremos
+// no momento em que terminarmos de fazer o upload do arquivo e recebermos a resposta
+//do nosso backend.
+
+  aoTerminarUploadAnexo(event: any) {
+    const anexo = event.originalEvent.body;
+    this.formulario.patchValue({
+      anexo: anexo.nome,
+      urlAnexo: anexo.url.replace('\\\\', 'https://')
+    });
+
+    this.uploadEmAndamento = false;
+  }
+
+
+  antesUploadAnexo() {
+    this.uploadEmAndamento = true;
+  }
+
+  erroUpload(event: any) {
+    this.messageService.add({ severity: 'error', detail: 'Erro ao tentar enviar anexo!' });
+    this.uploadEmAndamento = false;
+  }
+
+  removerAnexo() {
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
+  }
+
+  get nomeAnexo() {
+    console.log('nomeAnexo')
+    const nome = this.formulario?.get('anexo')?.value;
+    console.log(nome)
+    if (nome) {
+      return nome.substring(nome.indexOf('_') + 1, nome.length);
+    }
+
+    return '';
+  }
+
+
+
+  get urlUploadAnexo() {
+    return this.lancamentoService.urlUploadAnexo();
+  }
+
+  get uploadHeaders() {
+    return this.lancamentoService.uploadHeaders();
+  }
+
+
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
       /* Abaixo recebemos o primeiro parâmetro inicial e após a validação */
@@ -84,7 +152,9 @@ export class LancamentoCadastroComponent implements OnInit {
         codigo: [null, Validators.required],
         nome: []
       }),
-      observacao: []
+      observacao: [],
+      anexo: [],
+      urlAnexo: []
     });
   }
 
@@ -105,11 +175,28 @@ export class LancamentoCadastroComponent implements OnInit {
     return Boolean(this.formulario.get('codigo')?.value)
   }
 
+  // Utilizando a versão 3 do PrimeFlex, não será necessário retirar o p-fluid da div que contém o botão de remover anexo,
+  // pois, já será assumido o tamanho correto do botão.
+
+//Uma outra alteração será necessária em função do problema explicado na aula 23.20, em relação ao protocolo assumido
+//pelo navegador.
+
+// No momento em que carregamos o lançamento do nosso backend, ele também vem com o '\\\\' e, nesse momento, também
+//será necessário substituir este protocolo pelo 'https://'. Para isso, no método carregarLancamento(), após atribuir
+// o lançamento do backend no nosso formulário, acrescentaremos o seguinte:
+
   carregarLancamento(codigo: number) {
     this.lancamentoService.buscarPorCodigo(codigo)
       .then(lancamento => {
        // this.lancamento = lancamento;
        this.formulario.patchValue(lancamento);
+
+       if (this.formulario.get('urlAnexo')?.value)
+          this.formulario.patchValue({
+            urlAnexo: this.formulario.get('urlAnexo')?.value.replace('\\\\', 'https://')
+          });
+
+
         this.atualizarTituloEdicao()
       },
       erro => this.errorHandler.handle(erro));

@@ -10,7 +10,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 import { Pessoa } from 'src/app/core/model';
 import { PessoaService } from '../pessoa.service';
-import { Contato } from './../../core/model';
+
 
 @Component({
   selector: 'app-pessoa-cadastro',
@@ -20,9 +20,9 @@ import { Contato } from './../../core/model';
 export class PessoaCadastroComponent implements OnInit {
 
   pessoa = new Pessoa();
-  exbindoFormularioContato = false;
-  contato?: Contato;
-  contatoIndex?: number;
+  estados: any[] = [];
+  cidades: any[] = [];
+  estadoSelecionado?: number;
 
   constructor(
     private pessoaService: PessoaService,
@@ -39,42 +39,37 @@ export class PessoaCadastroComponent implements OnInit {
 
     this.title.setTitle('Nova pessoa');
 
+    this.carregarEstados();
+
     if (codigoPessoa && codigoPessoa !== 'nova') {
       this.carregarPessoa(codigoPessoa);
     }
   }
 
-  // Tem que ter o índice para poder alterar o contato corretamente!!!
-  prepararNovoContato() {
-    this.exbindoFormularioContato = true;
-    this.contato = new Contato();
-    this.contatoIndex = this.pessoa.contatos.length;
-  }
-
-
-  prepararEdicaoContato(contato: Contato, index: number) {
-    this.contato = this.clonarContato(contato);
-    this.exbindoFormularioContato = true;
-    this.contatoIndex = index;
-  }
-
-  confirmarContato(frm: NgForm) {
-    this.pessoa.contatos[this.contatoIndex!] = this.clonarContato(this.contato!);
-    this.exbindoFormularioContato = false;
-    // É preciso resetar a lista de contatos para não aparecer os campos pedindo para
-    // inserir
-    frm.reset();
-  }
-
-  // É preciso criar uma nova instância de contato ante de dar o push pois senão ele utilizara´
-  // a mesma instância de contato e apagará os dados na tela
-  clonarContato(contato: Contato): Contato {
-    return new Contato(contato.codigo, contato.nome, contato.email, contato.telefone);
-  }
 
 
   get editando() {
     return Boolean(this.pessoa.codigo)
+  }
+
+  carregarEstados() {
+    this.pessoaService.listarEstados().then(lista => {
+      this.estados = lista!.map(uf => ({ label: uf.nome, value: uf.codigo }));
+    })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  carregarCidades() {
+    this.pessoaService.pesquisarCidades(this.estadoSelecionado!)
+      .then(cidades => {
+        this.cidades = cidades!.map(c => ({
+          label: c.nome,
+          value: c.codigo
+        }));
+        if (this.estadoSelecionado !== this.pessoa.endereco.cidade.estado.codigo)
+          this.pessoa.endereco.cidade.codigo = undefined;
+      })
+      .catch((erro: any) => this.errorHandler.handle(erro));
   }
 
   carregarPessoa(codigo: number) {
@@ -128,5 +123,8 @@ export class PessoaCadastroComponent implements OnInit {
   atualizarTituloEdicao() {
     this.title.setTitle(`Edição de pessoa: ${this.pessoa.nome}`);
   }
+
+
+
 
 }

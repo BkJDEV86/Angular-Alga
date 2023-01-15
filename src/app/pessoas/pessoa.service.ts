@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { Pessoa } from '../core/model';
+import { Cidade, Estado, Pessoa } from '../core/model';
 import { environment } from './../../environments/environment';
 
 export class PessoaFiltro {
@@ -14,10 +14,14 @@ export class PessoaFiltro {
   providedIn: 'root'
 })
 export class PessoaService {
-  pessoasUrl: string
+  pessoasUrl: string;
+  cidadesUrl: string;
+  estadosUrl: string;
 
   constructor(private http: HttpClient) {
     this.pessoasUrl = `${environment.apiUrl}/pessoas`
+    this.estadosUrl = `${environment.apiUrl}/estados`;
+    this.cidadesUrl = `${environment.apiUrl}/cidades`;
    }
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
@@ -86,8 +90,17 @@ export class PessoaService {
     return firstValueFrom(this.http.get<Pessoa>(`${this.pessoasUrl}/${codigo}`))
 
   }
+    listarEstados(): Promise<Estado[] | undefined> {
+      return this.http.get<Estado[]>(this.estadosUrl).toPromise();
+    }
 
-}
+    pesquisarCidades(estadoId: number): Promise<Cidade[] | undefined> {
+      const params = new HttpParams()
+        .set('estado', estadoId);
+
+      return this.http.get<Cidade[]>(this.cidadesUrl, { params }).toPromise();
+    }
+  }
 
 /* Nessa versão do rxjs, o "toPromisse" foi depreciado, e o retorno dele foi alterado, agora
  é preciso utilizar a função "firstValueFrom" para gerar um promisse a partir de um
